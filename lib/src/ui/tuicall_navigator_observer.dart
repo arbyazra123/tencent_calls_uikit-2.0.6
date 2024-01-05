@@ -4,13 +4,21 @@ import 'package:tencent_calls_uikit/src/ui/widget/inviteuser/invite_user_widget.
 import 'package:tencent_calls_uikit/src/platform/tuicall_kit_platform_interface.dart';
 import 'package:tencent_calls_uikit/src/ui/tuicall_kit_widget.dart';
 
+typedef TuiCallOnPageChanged = dynamic Function(CallPage?);
+
 class TUICallKitNavigatorObserver extends NavigatorObserver {
   static final TUICallKitNavigatorObserver _instance =
       TUICallKitNavigatorObserver();
   static bool isClose = false;
   static CallPage currentPage = CallPage.none;
+  static Function(CallPage?)? onPageChanged;
 
-  static TUICallKitNavigatorObserver getInstance() {
+  static TUICallKitNavigatorObserver getInstance({
+    Function(CallPage?)? onPageChangedParam,
+  }) {
+    if (onPageChangedParam != null) {
+      onPageChanged = onPageChangedParam;
+    }
     return _instance;
   }
 
@@ -20,6 +28,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
 
   void enterCallingPage() async {
     currentPage = CallPage.callingPage;
+    onPageChanged?.call(currentPage);
     TUICallKitNavigatorObserver.getInstance()
         .navigator
         ?.push(MaterialPageRoute(builder: (widget) {
@@ -43,11 +52,13 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
       TUICallKitNavigatorObserver.getInstance().navigator?.pop();
     }
     currentPage = CallPage.none;
+    onPageChanged?.call(currentPage);
   }
 
   void enterInviteUserPage() {
     if (currentPage == CallPage.callingPage) {
       currentPage = CallPage.inviteUserPage;
+      onPageChanged?.call(currentPage);
       TUICallKitNavigatorObserver.getInstance()
           .navigator
           ?.push(MaterialPageRoute(builder: (widget) {
@@ -58,6 +69,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
 
   void exitInviteUserPage() {
     currentPage = CallPage.callingPage;
+    onPageChanged?.call(currentPage);
     TUICallKitNavigatorObserver.getInstance().navigator?.pop();
   }
 

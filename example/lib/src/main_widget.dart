@@ -189,7 +189,7 @@ class _MainWidgetState extends State<MainWidget> {
   _logout() {
     TUICallKit.instance.logout();
 
-    TUICallKit.navigatorObserver.navigator?.pushAndRemoveUntil(
+    TUICallKit.navigatorObserver().navigator?.pushAndRemoveUntil(
         MaterialPageRoute(builder: (widget) {
           return const LoginWidget();
         }), (route) => false);

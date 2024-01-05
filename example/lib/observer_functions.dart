@@ -55,14 +55,14 @@ void setObserverFubction({required TUICallEngine callsEnginePlugin}) {
   }, onKickedOffline: () {
     debugPrint(
         '------------------------------------------------onKickedOffline');
-    TUICallKit.navigatorObserver.navigator?.pushAndRemoveUntil(
+    TUICallKit.navigatorObserver().navigator?.pushAndRemoveUntil(
         MaterialPageRoute(builder: (widget) {
           return const LoginWidget();
         }), (route) => false);
   }, onUserSigExpired: () {
     debugPrint(
         '------------------------------------------------onUserSigExpired');
-    TUICallKit.navigatorObserver.navigator?.pushAndRemoveUntil(
+    TUICallKit.navigatorObserver().navigator?.pushAndRemoveUntil(
         MaterialPageRoute(builder: (widget) {
           return const LoginWidget();
         }), (route) => false);

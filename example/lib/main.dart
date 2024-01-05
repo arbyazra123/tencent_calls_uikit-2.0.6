@@ -14,7 +14,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
     super.initState();
@@ -23,7 +22,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        navigatorObservers: [TUICallKit.navigatorObserver],
+        navigatorObservers: [
+          TUICallKit.navigatorObserver(),
+        ],
         builder: (context, child) => Scaffold(
               resizeToAvoidBottomInset: false,
               body: GestureDetector(
